@@ -1,0 +1,26 @@
+@charset "UTF-8";
+@import "common/var";
+@import "mixins/mixins";
+
+@include b(json-item) {
+    display: flex;
+    align-items: center;
+    border: 1px solid #dddddd;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &-key {
+        margin-right:15px;
+        color: rgba($--color-info, 0.6);
+    }
+    &-value {
+        color: rgba($--color-primary, 0.7);
+    }
+    &-array {
+        display: flex;
+        align-items: center;
+        & > div {
+            margin-right: 10px;
+        }
+    }
+}
