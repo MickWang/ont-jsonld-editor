@@ -1,11 +1,23 @@
 <template>
 	<div class="home">
-		<json-ld-editor 
+        <div class="container">
+            <div class="input-container">
+                <div class="input-owner-data">
+                    <textarea type="textarea" v-model="owner_data" />
+                </div>
+                <div class="input-context-data">
+                    <textarea type="textarea" v-model="context_data" />
+                </div>
+                <button class="btn-confirm" @click="onConfirm">确认</button>
+            </div>
+            <json-ld-editor 
         :jsonldContext="jsonldData['@context']"
         :jsonldData="jsonldData"
             @editorCompact="onEditorCompact"
             @editorExpand="onEditorExpand"
-             ></json-ld-editor>
+             ></json-ld-editor>    
+        </div>
+		
 	</div>
 </template>
 
@@ -15,11 +27,14 @@ import * as jsonld from 'jsonld';
 export default {
     name: "home",
     data() {
-        
+        const context_data  = require('./context_data.json')
+        const owner_data = require('./owner_data.json')
         return {
             jsonldData: {
                 "@context": {}
-            }
+            },
+            owner_data: JSON.stringify(owner_data),
+            context_data : JSON.stringify(context_data),
         }
     },
 
@@ -149,11 +164,11 @@ export default {
                 }]
         }]
 }
-        const expand = await jsonld.expand(jsonldData)
-        console.log(expand)
-        const packed = await jsonld.compact(expand, jsonldData['@context'])
-        console.log(packed)
-        this.jsonldData = packed
+        // const expand = await jsonld.expand(jsonldData)
+        // console.log(expand)
+        // const packed = await jsonld.compact(expand, jsonldData['@context'])
+        // console.log(packed)
+        // this.jsonldData = packed
     },
     methods: {
         onEditorCompact(data) {
@@ -161,7 +176,46 @@ export default {
         },
         onEditorExpand(data) {
             alert(JSON.stringify(data))
+        },
+        async onConfirm() {
+            if(!this.owner_data || !this.context_data) return;
+            const owner_data = JSON.parse(this.owner_data)
+            const context_data = JSON.parse(this.context_data)
+            const packed = await jsonld.compact(owner_data, context_data)
+            console.log(packed)
+            // alert(JSON.stringify(packed))
+            this.jsonldData = packed;
         }
     }
 };
 </script>
+<style lang="scss" scoped>
+.container {
+    width: 100%;
+    display: flex;
+    .input-container {
+        width: 50%;
+        margin-right: 20px;
+        border: 1px solid #cccccc;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        .input-owner-data, .input-context-data {
+            flex:1;
+            padding: 10px;
+            textarea {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .btn-confirm {
+            width: 150px;
+            height: 40px;
+            background: #ffffff;
+            cursor: pointer;
+            margin: 10px;
+        }
+    }
+}
+</style>

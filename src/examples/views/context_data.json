@@ -1,0 +1,119 @@
+{
+    "@context": {
+      "addon": "https://store.dev.ont.io/addon/v1/",
+      "attestation": "ons://attestation.addon.ont/v1/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "info": {
+        "@id": "addon:info",
+        "@type": "@id",
+        "@context": {
+          "icon32x32": {
+            "@id": "addon:info#icon32x32",
+            "@type": "xsd:anyURI"
+          },
+          "icon64x64": {
+            "@id": "addon:info#icon64x64",
+            "@type": "xsd:anyURI"
+          },
+          "icon128x128": {
+            "@id": "addon:info#icon128x128",
+            "@type": "xsd:anyURI"
+          },
+          "i18n": {
+            "@id": "addon:info/i18n",
+            "@type": "@id",
+            "@context": {
+              "lang": {
+                "@id": "addon:info/i18n#lang",
+                "@type": "xsd:string"
+              },
+              "name": {
+                "@id": "addon:info/i18n#name",
+                "@type": "xsd:string"
+              },
+              "description": {
+                "@id": "addon:info/i18n#description",
+                "@type": "xsd:string"
+              }
+            }
+          },
+          "extra": {
+            "@id": "addon:info#extra",
+            "@type": "xsd:anyURI"
+          }
+        }
+      },
+      "meta": {
+        "@id": "addon:meta",
+        "@type": "@id",
+        "@context": {
+          "version": {
+            "@id": "addon:meta#version",
+            "@type": "xsd:string"
+          },
+          "dependency": {
+            "@id": "addon:meta#dependency",
+            "@type": "xsd:string"
+          },
+          "extra": {
+            "@id": "addon:meta#extra",
+            "@type": "xsd:anyURI"
+          },
+          "sdk": {
+            "@id": "addon:meta/sdk",
+            "@type": "@id",
+            "@context": {
+              "lang": {
+                "@id": "addon:meta/sdk#lang",
+                "@type": "xsd:string"
+              },
+              "api_doc": {
+                "@id": "addon:meta/sdk#api_doc",
+                "@type": "xsd:anyURI"
+              },
+              "resource": {
+                "@id": "addon:meta/sdk#resource",
+                "@type": "xsd:anyURI"
+              }
+            }
+          },
+          "protocol": {
+            "@id": "addon:meta/protocol",
+            "@type": "@id",
+            "@context": {
+              "doc": {
+                "@id": "addon:meta/protocol#doc",
+                "@type": "xsd:anyURI"
+              },
+              "verifier": {
+                "@id": "addon:meta/protocol#verifier",
+                "@type": "xsd:anyURI"
+              }
+            }
+          }
+        }
+      }
+    },
+    "@id": "ons://attestation.addon.ont",
+    "info": {
+      "icon64x64": "https://node.ont.io/static/img/logo.ba93ed20.png",
+      "i18n": {
+        "description": "This addon enables attestation for any hash (256), with algorithm of merkle tree, and provides full proof any hash added to the tree. This addon will charge upon live attestation gas fee (ONG) per month.",
+        "lang": "en",
+        "name": "Ontology attestation addon"
+      }
+    },
+    "meta": {
+      "extra": "https://attestation.ont.io",
+      "version": "0.5.0",
+      "protocol": {
+        "doc": "ons://attestation.ont.io/protocol/doc",
+        "verifier": "ons://attestation.ont.io/qa/verify"
+      },
+      "sdk": {
+        "api_doc": "ons://attestation.ont.io/api",
+        "lang": "java",
+        "resource": "ons://attestation.ont.io/sdk/java"
+      }
+    }
+  }

@@ -1,0 +1,293 @@
+[
+    {
+      "@id": "ons://attestation.addon.ont",
+      "https://store.dev.ont.io/addon/v1/info": [
+        {
+          "https://store.dev.ont.io/addon/v1/info/i18n": [
+            {
+              "https://store.dev.ont.io/addon/v1/info/i18n#description": [
+                {
+                  "@type": "http://www.w3.org/2001/XMLSchema#string",
+                  "@value": "This addon enables attestation for any hash (256), with algorithm of merkle tree, and provides full proof any hash added to the tree. This addon will charge upon live attestation gas fee (ONG) per month."
+                }
+              ],
+              "https://store.dev.ont.io/addon/v1/info/i18n#lang": [
+                {
+                  "@type": "http://www.w3.org/2001/XMLSchema#string",
+                  "@value": "en"
+                }
+              ],
+              "https://store.dev.ont.io/addon/v1/info/i18n#name": [
+                {
+                  "@type": "http://www.w3.org/2001/XMLSchema#string",
+                  "@value": "Ontology attestation addon"
+                }
+              ]
+            }
+          ],
+          "https://store.dev.ont.io/addon/v1/info#icon64x64": [
+            {
+              "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+              "@value": "https://node.ont.io/static/img/logo.ba93ed20.png"
+            }
+          ]
+        }
+      ],
+      "https://store.dev.ont.io/addon/v1/meta": [
+        {
+          "https://store.dev.ont.io/addon/v1/meta/config": [
+            {
+              "https://store.dev.ont.io/addon/v1/migrate_step": [
+                {
+                  "ons://attestation.addon.ont/v1/charge_day": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#integer",
+                      "@value": "!$DAY$!"
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step/callback": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                      "@value": "https://attestation.ont.io/subscribe/!$Tenant Id$!/!$Execution Id$!"
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step/description": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#string",
+                      "@value": "Ontology Foundation is about to deploy smart contract for your attestation service. The operating fee will charge every month. Ontology Foundation will notify you every month at \"Date\". Thanks for your corperation."
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step#idx": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#integer",
+                      "@value": 1
+                    }
+                  ]
+                },
+                {
+                  "https://store.dev.ont.io/addon/v1/step/callback": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                      "@value": "!#qrsign#!/Axxx/cancel/!$Execution Id$!"
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step/description": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#string",
+                      "@value": "This will cancel attestation service, and all record will be removed from service and Ontology network. Please confirm."
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step/param": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#string",
+                      "@value": "base64({\"callback\":\"https://attestation.ont.io/cancel/!$Tenant Id$!\"})"
+                    }
+                  ]
+                },
+                {
+                  "https://store.dev.ont.io/addon/v1/step/callback": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                      "@value": "!#qrsign#!/Axxx/assign/!$Auth Key$!/!$Execution Id$!"
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step/description": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#string",
+                      "@value": "This step will ensure customer delegate the on-chain access to \"Execution Id\" for attestation. Please scan the qrcode with \"Auth Key\" to confirm."
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step#idx": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#integer",
+                      "@value": 3
+                    }
+                  ]
+                },
+                {
+                  "https://store.dev.ont.io/addon/v1/step/description": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#string",
+                      "@value": "The attestation service is started. Please view the service at https://attestation.ont.io."
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step#idx": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#integer",
+                      "@value": 4
+                    }
+                  ]
+                }
+              ],
+              "https://store.dev.ont.io/addon/v1/step": [
+                {
+                  "ons://attestation.addon.ont/v1/authkey": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#string",
+                      "@value": "abc"
+                    }
+                  ],
+                  "ons://attestation.addon.ont/v1/execution_id": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#string",
+                      "@value": "!$RAND_WALLET$!"
+                    }
+                  ],
+                  "ons://attestation.addon.ont/v1/tenant_id": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#string",
+                      "@value": "!$HOSTID$!"
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step/description": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#string",
+                      "@value": "\"Auth Key\" is a pre-defined auth key from end user (app host), which will be verified by attestation service for any actions, \"Auth Key\" stands for the customer of attestation service, \"Tenant Id\" stands for the attestation service, \"Execution Id\" takes the full responsibility to store attestation proof on-chain."
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step#idx": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#integer",
+                      "@value": 1
+                    }
+                  ]
+                },
+                {
+                  "https://store.dev.ont.io/addon/v1/step/callback": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                      "@value": "https://attestation.ont.io/test/subscribe/!$Tenant Id$!/!$Execution Id$!"
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step/description": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#string",
+                      "@value": "Ontology Foundation is about to deploy smart contract for your attestation service."
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step#idx": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#integer",
+                      "@value": 2
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step/rollbackable": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+                      "@value": true
+                    }
+                  ]
+                },
+                {
+                  "https://store.dev.ont.io/addon/v1/step/callback": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                      "@value": "!#qrtestsign#!/Axxx/cancel/!$Execution Id$!"
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step/description": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#string",
+                      "@value": "This will cancel attestation service, and all record will be removed from service and Ontology network. Please confirm."
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step/param": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#string",
+                      "@value": "base64({\"callback\":\"https://attestation.ont.io/test/cancel/!$Tenant Id$!\"})"
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step/rollback_of": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#integer",
+                      "@value": 2
+                    }
+                  ]
+                },
+                {
+                  "https://store.dev.ont.io/addon/v1/step/description": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#string",
+                      "@value": "The attestation service is started. Please view the service at https://attestation.ont.io/test."
+                    }
+                  ],
+                  "https://store.dev.ont.io/addon/v1/step#idx": [
+                    {
+                      "@type": "http://www.w3.org/2001/XMLSchema#integer",
+                      "@value": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "https://store.dev.ont.io/addon/v1/meta#extra": [
+            {
+              "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+              "@value": "https://attestation.ont.io"
+            }
+          ],
+          "https://store.dev.ont.io/addon/v1/meta/protocol": [
+            {
+              "https://store.dev.ont.io/addon/v1/meta/protocol#doc": [
+                {
+                  "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                  "@value": "ons://attestation.ont.io/protocol/doc"
+                }
+              ],
+              "https://store.dev.ont.io/addon/v1/meta/protocol#verifier": [
+                {
+                  "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                  "@value": "ons://attestation.ont.io/qa/verify"
+                }
+              ]
+            }
+          ],
+          "https://store.dev.ont.io/addon/v1/meta/runtime": [
+            {
+              "https://store.dev.ont.io/addon/v1/meta/runtime#callback": [
+                {
+                  "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                  "@value": "https://attestation.ont.io/notify/!$HOSTID$!"
+                }
+              ],
+              "https://store.dev.ont.io/addon/v1/meta/runtime#cron": [
+                {
+                  "@type": "http://www.w3.org/2001/XMLSchema#string",
+                  "@value": "0 0 !$Date$! * *"
+                }
+              ]
+            }
+          ],
+          "https://store.dev.ont.io/addon/v1/meta/sdk": [
+            {
+              "https://store.dev.ont.io/addon/v1/meta/sdk#api_doc": [
+                {
+                  "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                  "@value": "ons://attestation.ont.io/api"
+                }
+              ],
+              "https://store.dev.ont.io/addon/v1/meta/sdk#lang": [
+                {
+                  "@type": "http://www.w3.org/2001/XMLSchema#string",
+                  "@value": "java"
+                }
+              ],
+              "https://store.dev.ont.io/addon/v1/meta/sdk#resource": [
+                {
+                  "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                  "@value": "ons://attestation.ont.io/sdk/java"
+                }
+              ]
+            }
+          ],
+          "https://store.dev.ont.io/addon/v1/meta#version": [
+            {
+              "@type": "http://www.w3.org/2001/XMLSchema#string",
+              "@value": "0.5.0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
