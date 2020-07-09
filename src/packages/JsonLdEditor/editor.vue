@@ -76,7 +76,9 @@ export default {
             for(const key of Object.keys(sourceData)) {
                 if(key === '@context') continue;
                 if(Array.isArray(sourceData[key])) {
-                    targetData[key] = sourceData[key]
+                    targetData[key] = Object.assign({}, sourceData[key])
+                    targetData[key].value = ''
+                    targetData[key].placeholder = sourceData[key].value
                 }
                 else if(typeof sourceData[key] === 'object') {
                     this.applyData(sourceData[key], targetData[key])

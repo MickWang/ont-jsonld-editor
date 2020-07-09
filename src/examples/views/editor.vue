@@ -3,9 +3,11 @@
         <div class="container">
             <div class="input-container">
                 <div class="input-owner-data">
+                    <p>Input owner data:</p>
                     <textarea type="textarea" v-model="owner_data" />
                 </div>
                 <div class="input-context-data">
+                    <p>Input context data:</p>
                     <textarea type="textarea" v-model="context_data" />
                 </div>
                 <button class="btn-confirm" @click="onConfirm">确认</button>
@@ -27,8 +29,8 @@ import * as jsonld from 'jsonld';
 export default {
     name: "home",
     data() {
-        const context_data  = require('./context_data.json')
-        const owner_data = require('./owner_data.json')
+        const context_data  = require('../data/context_data.json')
+        const owner_data = require('../data/owner_data.json')
         return {
             jsonldData: {
                 "@context": {}
@@ -177,14 +179,37 @@ export default {
         onEditorExpand(data) {
             alert(JSON.stringify(data))
         },
+        //context data: 过滤限制输入项，做输入的placeholder；指定输入值的类型
+        // owner_data: 用户的值，如果有做默认值
+        // 输出 expanded data
         async onConfirm() {
             if(!this.owner_data || !this.context_data) return;
             const owner_data = JSON.parse(this.owner_data)
             const context_data = JSON.parse(this.context_data)
-            const packed = await jsonld.compact(owner_data, context_data)
+            let packed = await jsonld.compact(owner_data, context_data)
+            // packed = Object.freeze(packed)
             console.log(packed)
+            this.filterObjectKeys(packed, context_data)
+            // 根据context，过滤packed，只保留context里有的key，
+            
             // alert(JSON.stringify(packed))
             this.jsonldData = packed;
+        },
+        filterObjectKeys(source, target) {
+            for(const key of Object.keys(source)) {
+                if(!target[key]) {
+                    delete source[key]
+                } else if(Array.isArray(source[key])) {
+                    this.filterArrayKeys(source[key], target[key])
+                } else if(typeof source[key] === 'object') {
+                    this.filterObjectKeys(source[key], target[key])
+                } else {
+                    // TODO 设置类型, 默认值，placeholder
+                }
+            }
+        },
+        filterArrayKeys(source, target) {
+
         }
     }
 };
@@ -200,15 +225,20 @@ export default {
         padding: 15px;
         display: flex;
         flex-direction: column;
-        height: 100vh;
         .input-owner-data, .input-context-data {
-            flex:1;
-            padding: 10px;
             textarea {
                 width: 100%;
-                height: 100%;
+                height: 360px;
+            }
+            & > p {
+                margin: 0;
+                margin-bottom: 5px;
             }
         }
+        .input-owner-data {
+            margin-bottom: 15px;
+        }
+
         .btn-confirm {
             width: 150px;
             height: 40px;

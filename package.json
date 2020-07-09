@@ -59,6 +59,7 @@
   },
   "scripts": {
     "dev": "vue-cli-service serve",
+    "build:test": "vue-cli-service build", 
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "clean": "rimraf lib",
