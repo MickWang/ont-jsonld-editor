@@ -95,6 +95,7 @@ export default {
                 ...this.jsonForm
             }
             // console.log(JSON.stringify(data))
+            delete data['@context']
             this.$emit('editorCompact', data)
         },
         async handleExpand() {

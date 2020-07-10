@@ -33,6 +33,8 @@
 <script>
 // import SButton from '../../packages/button'
 import * as jsonld from 'jsonld';
+var cloneDeep = require('lodash.clonedeep');
+
 export default {
     name: "home",
     data() {
@@ -59,8 +61,26 @@ export default {
             this.showModal = true
         },
         onEditorExpand(data) {
-            this.showData = JSON.stringify(data)
+            debugger
+            // 将输出的expanded data 与用户的expanded data做并集
+            const userData = cloneDeep(JSON.parse(this.owner_data_input))
+            this.unionData(userData[0], data[0]) // 都是含有一个元素的数组 
+            this.showData = JSON.stringify(userData)
             this.showModal = true
+        },
+        unionData(userData, data) {
+            for(const key of Object.keys(data)) {
+                if(!userData[key]) {
+                    userData[key] = data[key]
+                } 
+                else if(Array.isArray(userData[key]) && userData[key].length ===1 && userData[key][0]['@type']) {
+                    userData[key][0]['@value'] = data[key][0]['@value']
+                } else if (Array.isArray(userData[key]) && userData[key].length ===1 && !userData[key][0]['@type']){
+                    this.unionData(userData[key][0], data[key][0])
+                } else {
+                    userData[key] = data[key]
+                }
+            }
         },
         //context data: 过滤限制输入项，做输入的placeholder；指定输入值的类型
         // owner_data: 用户的值，如果有做默认值
