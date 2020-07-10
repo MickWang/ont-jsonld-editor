@@ -4,22 +4,29 @@
             <div class="input-container">
                 <div class="input-owner-data">
                     <p>Input owner data:</p>
-                    <textarea type="textarea" v-model="owner_data" />
+                    <textarea type="textarea" v-model="owner_data_input" />
                 </div>
                 <div class="input-context-data">
                     <p>Input context data:</p>
-                    <textarea type="textarea" v-model="context_data" />
+                    <textarea type="textarea" v-model="context_data_input" />
                 </div>
                 <button class="btn-confirm" @click="onConfirm">确认</button>
             </div>
             <json-ld-editor 
-        :jsonldContext="jsonldData['@context']"
+        :jsonldContext="context_data"
         :jsonldData="jsonldData"
             @editorCompact="onEditorCompact"
             @editorExpand="onEditorExpand"
              ></json-ld-editor>    
         </div>
-		
+		<div class="modal" v-show="showModal">
+            <div class="modal-content">
+                <p>{{showData}}</p>
+                <div class="modal-footer">
+                    <button class="normal-button" @click="() => {this.showModal = false}">OK</button>
+                </div>
+            </div>
+        </div>
 	</div>
 </template>
 
@@ -35,161 +42,39 @@ export default {
             jsonldData: {
                 "@context": {}
             },
-            owner_data: JSON.stringify(owner_data),
-            context_data : JSON.stringify(context_data),
+            owner_data_input: JSON.stringify(owner_data),
+            context_data_input : JSON.stringify(context_data),
+            context_data: {'@context': {}},
+            showModal: false,
+            showData: ''
         }
     },
 
     async mounted() {
-        const jsonldData = {
-    "@context": {
-        "addon": "https://store.dev.ont.io/addon/v1/",
-        "triones":"ons://triones.addon.ont/v1/",
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "meta":"addon:meta",
-        "config": "addon:meta/config",
-        "step": {
-            "@id":"addon:step",
-            "@type":"@id",
-            "@context": {
-                "idx": {
-                    "@id":"addon:step#idx",
-                    "@type":"xsd:integer"
-                },
-                "callback": {
-                    "@id":"addon:step/callback",
-                    "@type":"xsd:anyURI"
-                },
-                "param": {
-                    "@id":"addon:step/param",
-                    "@type":"xsd:string"
-                },
-                "rollback_of": {
-                    "@id":"addon:step/rollback_of",
-                    "@type":"xsd:integer"
-                },
-                "rollbackable": {
-                    "@id":"addon:step/rollbackable",
-                    "@type":"xsd:boolean"
-                },
-                "status": {
-                    "@id":"addon:step/status",
-                    "@type":"xsd:string"
-                },
-                "description":{
-                    "@id":"addon:step/description",
-                    "@type":"xsd:string"
-                },
-                "Date":{
-                    "@id":"triones:charge_day",
-                    "@type":"xsd:integer"
-                },
-                "Delegate wallet":{
-                    "@id":"triones:delegate_wallet",
-                    "@type":"xsd:string"
-                },
-                "Ops pubkey":{
-                    "@id":"triones:ops_pubkey",
-                    "@type":"xsd:string"
-                },
-                "初始质押":{
-                    "@id":"triones:init_pos",
-                    "@type":"xsd:integer"
-                }
-            }
-        },
-        "runtime": {
-            "@id":"addon:meta/runtime",
-            "@type":"@id",
-            "@context": {
-                "callback": {
-                    "@id":"addon:meta/runtime#callback",
-                    "@type":"xsd:anyURI"
-                },
-                "cron": {
-                    "@id":"addon:meta/runtime#cron",
-                    "@type":"xsd:string"
-                }
-            }
-        }    
-    },
-    "@id":"ons://triones.addon.ont",
-    "info": {
-        "icon64x64": "https://node.ont.io/static/img/logo.ba93ed20.png",
-        "i18n":[
-            {
-                "lang":"en",
-                "name": "Triones node delegation addon",
-                "description": "Ontology Foundation enabled free access for node delegation, any wallet with >=10,000 ONT is able to delegate to Ontology Triones network. Node has to be started as an Ontology Triones node. Ontology Foundation provides maintenance and operating work for node delegation. This addon helps any community members to run a live node with low price (150 ONT per month)."
-            }]
-    },
-    "meta": [
-        {
-            "version": "0.5.0",
-            "extra": "https://node.ont.io",
-            "config": {
-                "step": [
-                    {
-                        "idx": 1,
-                        "description":"Node delegation requires any \"Delegate Wallet\" with >=10,000 ONT, \"Init Pos\" will be used to delegate to Triones network, 500 ONG will be charged by then. \"Ops Pubkey\" is generated automatically, for common operating.",
-                        "Delegate wallet":"Axxxxxx",
-                        "Ops pubkey":"!$RAND_PUBKEY$!",
-                        "初始质押":10000
-                    },
-                    {
-                        "idx": 2,
-                        "description":"This step will generate a transaction to delegate \"Init Pos\" to Triones network, will charge 500 ONG, the node operator is set to \"Ops Pubkey\", all node incentive will go to \"Delegate Wallet\". Please confirm.",
-                        "callback":"!#qrsign#!/Axxx/delegate/!$Delegate wallet$!/!$Ops pubkey$!/!$Init pos$!",
-                        "rollbackable":true
-                    },
-                    {
-                        "rollback_of": 2,
-                        "description":"This will quit node delegation from \"Delegate Wallet\". Please aware enough ONG in  \"Delegate Wallet\". Please confirm.",
-                        "callback":"!#qrsign#!/Axxx/withdraw/!$Delegate wallet$!"
-                    },
-                    {
-                        "idx": 3,
-                        "description":"Ontology Foundation is about to start your node. The node operating fee is set to 150 ONT per month, and will charge every month. Please scan the qrcode and pay for the first month. Ontology Foundation will notify you every month at \"Date\". Thanks for your corperation.",
-                        "Date":"!$DAY$!",
-                        "callback":"https://node.ont.io/subscription/!$Delegate Wallet$!",
-                        "param":"base64({\"unit\":\"ONT\",\"amount\":150})"
-                    },
-                    {
-                        "idx": 4,
-                        "description":"Ontology Foundation is starting your node. Please view the node status report at https://node.ont.io."
-                    }]
-            },
-            "runtime":[
-                {
-                    "callback":"https://node.ont.io/notify/!$HOSTID$!",
-                    "cron":"0 0 !$Date$! * *"
-                }]
-        }]
-}
-        // const expand = await jsonld.expand(jsonldData)
-        // console.log(expand)
-        // const packed = await jsonld.compact(expand, jsonldData['@context'])
-        // console.log(packed)
-        // this.jsonldData = packed
+        
     },
     methods: {
         onEditorCompact(data) {
-            alert(JSON.stringify(data))
+            this.showData = JSON.stringify(data)
+            this.showModal = true
         },
         onEditorExpand(data) {
-            alert(JSON.stringify(data))
+            this.showData = JSON.stringify(data)
+            this.showModal = true
         },
         //context data: 过滤限制输入项，做输入的placeholder；指定输入值的类型
         // owner_data: 用户的值，如果有做默认值
         // 输出 expanded data
         async onConfirm() {
-            if(!this.owner_data || !this.context_data) return;
-            const owner_data = JSON.parse(this.owner_data)
-            const context_data = JSON.parse(this.context_data)
+            if(!this.owner_data_input || !this.context_data_input) return;
+            const owner_data = JSON.parse(this.owner_data_input)
+            const context_data = JSON.parse(this.context_data_input)
+            this.context_data = context_data;
             let packed = await jsonld.compact(owner_data, context_data)
             // packed = Object.freeze(packed)
             console.log(packed)
             this.filterObjectKeys(packed, context_data)
+            this.addMissedKeys(packed, context_data)
             // 根据context，过滤packed，只保留context里有的key，
             
             // alert(JSON.stringify(packed))
@@ -197,6 +82,7 @@ export default {
         },
         filterObjectKeys(source, target) {
             for(const key of Object.keys(source)) {
+                if(key === '@context') continue;
                 if(!target[key]) {
                     delete source[key]
                 } else if(Array.isArray(source[key])) {
@@ -204,7 +90,18 @@ export default {
                 } else if(typeof source[key] === 'object') {
                     this.filterObjectKeys(source[key], target[key])
                 } else {
-                    // TODO 设置类型, 默认值，placeholder
+                    // TODO 根据context data的context 设置类型，placeholder
+                }
+            }
+        },
+        addMissedKeys(source, target) {
+            for(const key of Object.keys(target)) {
+                if(key === '@context') continue;
+                if(!Array.isArray(target[key]) && typeof target[key] === 'object') {
+                    this.addMissedKeys(source[key], target[key])
+                }
+                else if(!source[key]) {
+                    source[key] = '' //补上user data缺失的key，后面根据context data 渲染placeholder
                 }
             }
         },
@@ -247,5 +144,50 @@ export default {
             margin: 10px;
         }
     }
+}
+
+.modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.3);
+    top: 0;
+    left: 0;
+    .modal-content {
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 50%;
+        background: #ffffff;
+        display: block;
+        margin: 100px auto;
+        padding: 15px;
+        
+        p {
+            margin: 0;
+            height: 400px;
+            background: rgba(0,0,0,.1);
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            word-wrap: none;
+        }
+        .modal-footer {
+            width: 100%;
+            text-align: center;
+        }
+        
+    }
+}
+.normal-button {
+    border: 1px solid #000000;
+    background: #ffffff;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+    outline: none;
+}
+.normal-button:hover {
+    background: rgba(0,0,0,.3)
 }
 </style>

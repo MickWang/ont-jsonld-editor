@@ -1,6 +1,6 @@
 <template>
 <div>
-    <editor-form :data="jsonForm"></editor-form>
+    <editor-form :data="jsonForm" :context="jsonldContext" :rootContext="jsonldContext"></editor-form>
     <div class="footer">
         <button @click="handleCompact">输出Compacted</button>
         <button @click="handleExpand">输出Expanded</button>
@@ -28,24 +28,24 @@ export default {
             required: false
         }
     },
+    
     data() {
-        const data = {}
+        // const data = {}
         // this.constructData(this.jsonldContext, data)
-        if(this.jsonldData) {
-            this.applyData(this.jsonldData, data)
-        }
+        // if(this.jsonldData) {
+        //     this.applyData(this.jsonldData, data)
+        // }
+        const data = cloneDeep(this.jsonldData)
+        delete data['@context']
         return {
             // jsonForm: cloneDeep(this.jsonld)
-            //TODO 根据context 构造表单data，输入统一input。
-            // TODO： 数组类型的值如何确定
-            jsonForm: cloneDeep(this.jsonldData),
-            context: {}
+            //TODO 根据jsonldData选择表单，根据jsonldContext确定类型和placeholder
+            jsonForm: data
         }
     },
     watch: {
         jsonldData(val) {
             const data = cloneDeep(val)
-            this.context = data['@context']
             delete data['@context']
             this.jsonForm = data;
         }
@@ -91,7 +91,7 @@ export default {
         async handleCompact () {
             // const packed = await jsonld.compact(this.jsonForm, this.context)
             const data = {
-                "@context": {...this.context},
+                "@context": {...this.jsonldContext['@context']},
                 ...this.jsonForm
             }
             // console.log(JSON.stringify(data))
@@ -99,7 +99,7 @@ export default {
         },
         async handleExpand() {
             const data = {
-                "@context": {...this.context},
+                "@context": {...this.jsonldContext['@context']},
                 ...this.jsonForm
             }
             const expand = await jsonld.expand(data)
