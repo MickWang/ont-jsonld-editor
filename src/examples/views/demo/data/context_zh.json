@@ -1,0 +1,82 @@
+{
+    "@context": {
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "kg": "http://openkg.cn/schema#",
+        "名字": "http://schema.org/name",
+        "描述": "http://schema.org/description",
+        "图标": {
+            "@id": "http://schema.org/image",
+            "@type": "@id"
+        },
+        "类型":{
+            "@id":"kg:type",
+            "@type":"xsd:string"
+        },
+        "许可":{
+            "@id":"kg:license",
+            "@type":"xsd:string"
+        },
+        "标签":{
+            "@id":"kg:tag",
+            "@type":"xsd:string"
+        },
+        "引用":{
+            "@id":"kg:ref",
+            "@type":"xsd:anyURI"
+        },
+        "作者":{
+            "@id":"kg:author",
+            "@type":"xsd:string"
+        },
+        "维护者":{
+            "@id":"kg:tag",
+            "@type":"xsd:string"
+        },
+        "所有人":  
+        {
+            "@id":"kg:owner",
+            "@type":"@id",
+            "@context":{
+                "类型":{
+                    "@id":"kg:entity_type",
+                    "@type":"xsd:string"
+                },
+                "名字":{
+                    "@id":"kg:entity_name",
+                    "@type":"xsd:string"
+                },
+                "描述":{
+                    "@id":"kg:entity_desc",
+                    "@type":"xsd:string"
+                },
+                "网站":{
+                    "@id":"kg:entity_website",
+                    "@type":"xsd:anyURI"
+                },
+                "邮箱":{
+                    "@id":"kg:entity_mail",
+                    "@type":"xsd:anyURI"
+                }
+            }
+        }
+    },
+    "所有人":{
+        "类型":"organization|user",
+        "名字":"所有人名称",
+        "描述":"所有人描述",
+        "网站":"所有人网站",
+        "邮箱":"所有人邮箱"
+    },
+    "名字":"资源名称",
+    "描述":"资源描述",
+    "图标":"资源图标",
+    "类型":"url|pdf|docx|...",
+    "许可":"cc-by-sa",
+    "标签":[
+        "标签集合"],
+    "引用":"引用 URI",
+    "作者":[
+        "作者集合"],
+    "维护者":[
+        "维护者集合"]
+}

@@ -1,71 +1,32 @@
 <template>
 	<div class="home">
-		<json-ld-viewer :jsonld="jsonld"></json-ld-viewer>
+        <el-tabs v-model="activeTab" @tab-click="handleClick">
+            <el-tab-pane label="商家发布" name="seller"></el-tab-pane>
+            <el-tab-pane label="买家查看" name="buyer"></el-tab-pane>
+        </el-tabs>
+		<router-view></router-view>
 	</div>
 </template>
 
 <script>
-// import SButton from '../../packages/button'
+// 商家发布：根据jsonld 显示表单，保存时将去除context的json保存在本地sessionStorage
+// 买家展示：根据jsond和保存的json 显示
 export default {
     name: "home",
-    data: () => ({
-        jsonld: {
-	"@context": {
-		"gr": "http://purl.org/goodrelations/v1#",
-		"pto": "http://www.productontology.org/id/",
-		"foaf": "http://xmlns.com/foaf/0.1/",
-		"xsd": "http://www.w3.org/2001/XMLSchema#",
-		"foaf:page": {
-			"@type": "@id"
-		},
-		"gr:acceptedPaymentMethods": {
-			"@type": "@id"
-		},
-		"gr:hasBusinessFunction": {
-			"@type": "@id"
-		},
-		"gr:hasCurrencyValue": {
-			"@type": "xsd:float"
-		},
-		"mp": {
-			"@id":"http://ont.io/ddxf#mp", 
-			"@type":"@id",
-			"@context": {
-				"owner": {"@id":"http://ont.io/ddxf#owner", "@type":"xsd:string"},
-				"marketplace": {"@id":"http://ont.io/ddxf#marketplace", "@type":"xsd:string"},
-				"acl": {"@id":"http://ont.io/ddxf#acl", "@type":"xsd:anyURI"},
-				"timespan": {"@id":"http://ont.io/ddxf#timespan", "@type": "xsd:dateTime"},
-				"judgers": {"@id":"http://ont.io/ddxf#judgers", "@type": "xsd:array"}
-            }
+    data() {
+        return {
+            activeTab: 'seller',
+            activeIndex: "1"
         }
     },
-	"@id": "market://example.org/cars/for-sale/uuid",
-	"@type": "gr:Offering",
-	"gr:name": "Used Tesla Roadster",
-	"gr:description": "Need to sell fast and furiously",
-	"gr:hasBusinessFunction": "gr:Sell",
-	"gr:acceptedPaymentMethods": "gr:Cash",
-	"gr:hasPriceSpecification": {
-		"gr:hasCurrencyValue": "85000",
-		"gr:hasCurrency": "USD"
-	},
-	"gr:includes": {
-		"@type": [
-			"gr:Individual",
-			"pto:Vehicle"
-		],
-		"gr:name": "Tesla Roadster",
-		"foaf:page": "http://www.teslamotors.com/roadster"
-	},
-	"mp": {
-		"owner": "did:ont:xxx",
-		"marketplace": "did:ont:xxx",
-		"acl": "data://xxx/yyy#acl-0",
-        "dataId": "did:ont:xxx",
-		"expired": "2021-04-09T20:00:00Z",
-		"judgers": ["did:ont:xxx", "xxx"]
-	}
-}
-    })
+    methods: {
+        handleClick(tab) {
+            if(tab.name === 'seller') {
+                this.$router.replace({path: '/demo-editor'})
+            } else {
+                this.$router.replace({path: '/demo-viewer'})
+            }
+        }
+    }
 };
 </script>

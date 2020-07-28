@@ -1,7 +1,7 @@
 <template>
 <div>
     <editor-form :data="jsonForm" :context="jsonldContext" :rootContext="jsonldContext"></editor-form>
-    <div class="footer">
+    <div class="footer" v-if="showFooter">
         <button @click="handleCompact">输出Compacted</button>
         <button @click="handleExpand">输出Expanded</button>
     </div>
@@ -26,6 +26,10 @@ export default {
         jsonldData: {
             type: Object,
             required: false
+        },
+        showFooter: {
+            type: Boolean,
+            default: true
         }
     },
     

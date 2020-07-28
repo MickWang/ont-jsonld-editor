@@ -1,0 +1,83 @@
+{
+    "@context": {
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "kg": "http://openkg.cn/schema#",
+        "name": "http://schema.org/name",
+        "description": "http://schema.org/description",
+        "image": {
+            "@id": "http://schema.org/image",
+            "@type": "@id"
+        },
+        "type":{
+            "@id":"kg:type",
+            "@type":"xsd:string"
+        },
+        "license":{
+            "@id":"kg:license",
+            "@type":"xsd:string"
+        },
+        "tag":{
+            "@id":"kg:tag",
+            "@type":"xsd:string"
+        },
+        "ref":{
+            "@id":"kg:ref",
+            "@type":"xsd:anyURI"
+        },
+        "author":{
+            "@id":"kg:author",
+            "@type":"xsd:string"
+        },
+        "maintainer":{
+            "@id":"kg:tag",
+            "@type":"xsd:string"
+        },
+        "owner":  
+        {
+            "@id":"kg:owner",
+            "@type":"@id",
+            "@context":{
+                "entity_type":{
+                    "@id":"kg:entity_type",
+                    "@type":"xsd:string"
+                },
+                "entity_name":{
+                    "@id":"kg:entity_name",
+                    "@type":"xsd:string"
+                },
+                "entity_desc":{
+                    "@id":"kg:entity_desc",
+                    "@type":"xsd:string"
+                },
+                "entity_website":{
+                    "@id":"kg:entity_website",
+                    "@type":"xsd:anyURI"
+                },
+                "entity_mail":{
+                    "@id":"kg:entity_mail",
+                    "@type":"xsd:anyURI"
+                }
+            }
+        }
+    },
+    "owner":{
+        "entity_type":"organization|user",
+        "entity_name":"name of entity",
+        "entity_desc":"description of entity",
+        "entity_website":"website of entity",
+        "entity_mail":"mail of entity"
+    },
+    "name":"name of the resource",
+    "description":"description of the resource",
+    "image":"icon or image source of the resource",
+    "type":"url|pdf|docx|...",
+    "license":"cc-by-sa",
+    "tag":[
+        "tag set"],
+    "ref":"reference of the resource, in URI",
+    "author":[
+        "author set"],
+    "maintainer":[
+        "maintainer set"]
+}
+

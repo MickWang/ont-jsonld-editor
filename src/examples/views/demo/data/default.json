@@ -1,0 +1,108 @@
+[
+    {
+      "@id": "http://openkg.cn/dataset/event-concept-graph-xueji",
+      "http://openkg.cn/schema#author": [
+        {
+          "@type": "http://www.w3.org/2001/XMLSchema#string",
+          "@value": "数据地平线（广州）科技有限公司"
+        }
+      ],
+      "http://schema.org/name": [
+        {
+          "@value": "学迹:大规模实时(事件逻辑与概念)事理知识库"
+        }
+      ],
+      "http://schema.org/image": [
+        {
+          "@id": "http://openkg1.oss-cn-beijing.aliyuncs.com/2019-03-04-103005.623906WechatIMG5.png"
+        }
+      ],
+      "http://openkg.cn/schema#ref": [
+        {
+          "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+          "@value": "https://xueji.datahorizon.cn"
+        }
+      ],
+      "http://openkg.cn/schema#owner": [
+        {
+          "http://openkg.cn/schema#entity_name": [
+            {
+              "@type": "http://www.w3.org/2001/XMLSchema#string",
+              "@value": "数据地平线(广州)科技有限公司"
+            }
+          ],
+          "http://openkg.cn/schema#entity_desc": [
+            {
+              "@type": "http://www.w3.org/2001/XMLSchema#string",
+              "@value": "数据地平线(广州)科技有限公司是中国科学院软件研究所智能金融研究团队的成果商业化平台，由广州市智能软件产业研究院(由中科院软件所承建)的智能金融研究中心孵化而来。专注于自然语言处理技术、知识图谱技术及相关人工智能技术在智能金融领域的研究与应用，旨在以人工智能技术为驱动力，赋能金融服务机构，实现客户商业价值。"
+            }
+          ],
+          "http://openkg.cn/schema#entity_type": [
+            {
+              "@type": "http://www.w3.org/2001/XMLSchema#string",
+              "@value": "organization"
+            }
+          ],
+          "http://openkg.cn/schema#entity_website": [
+            {
+              "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+              "@value": "https://datahorizon.cn"
+            }
+          ],
+          "http://openkg.cn/schema#entity_mail": [
+            {
+              "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+              "@value": "mkt@datahorizon.cn"
+            }
+          ]
+        }
+      ],
+      "http://schema.org/description": [
+        {
+          "@value": "实时事理逻辑知识库终身学习和事件为核心的知识库搜索项目。包括事件概念抽取、事件因果逻辑抽取、事件数据关联推荐与推理。截至目前，我们已经积累事件概念描述三元组500余万，因果事件三元组两千余万，概念上下位三元组一百余万。“学迹”为三元组提供了一个搜索入口，围绕事件，提供事件的前序原因、后续结果，事件的关联概念，事件关联产业链的搜索。"
+        }
+      ],
+      "http://openkg.cn/schema#tag": [
+        {
+          "@type": "http://www.w3.org/2001/XMLSchema#string",
+          "@value": "事件库"
+        },
+        {
+          "@type": "http://www.w3.org/2001/XMLSchema#string",
+          "@value": "事件逻辑"
+        },
+        {
+          "@type": "http://www.w3.org/2001/XMLSchema#string",
+          "@value": "事理图谱"
+        },
+        {
+          "@type": "http://www.w3.org/2001/XMLSchema#string",
+          "@value": "事理学习"
+        },
+        {
+          "@type": "http://www.w3.org/2001/XMLSchema#string",
+          "@value": "事理逻辑"
+        },
+        {
+          "@type": "http://www.w3.org/2001/XMLSchema#string",
+          "@value": "知识图谱"
+        },
+        {
+          "@type": "http://www.w3.org/2001/XMLSchema#string",
+          "@value": "刘焕勇"
+        }
+      ],
+      "http://openkg.cn/schema#type": [
+        {
+          "@type": "http://www.w3.org/2001/XMLSchema#string",
+          "@value": "url"
+        }
+      ],
+      "http://openkg.cn/schema#license": [
+        {
+          "@type": "http://www.w3.org/2001/XMLSchema#string",
+          "@value": "cc-by-sa"
+        }
+      ]
+    }
+  ]
