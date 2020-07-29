@@ -46,6 +46,13 @@ export default {
             return store.lang
         }
     },
+    created() {
+        if(this.$route.path === '/demo-editor') {
+            this.activeTab = 'seller'
+        } else {
+            this.activeTab = 'buyer'
+        }
+    },
     methods: {
         handleClick(tab) {
             if(tab.name === 'seller') {

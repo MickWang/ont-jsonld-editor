@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div v-for="(key, index) of Object.keys(jsonld).filter(k => k !== '@context')" 
+    <div v-for="(key, index) of Object.keys(jsonld).filter(k => k !== '@context' && jsonld[k])" 
         :key="index" class="saga-json-item">
         <p class="saga-json-item-key">{{key}}</p>
         <div class="saga-json-item-value saga-json-item-array" 
@@ -11,6 +11,9 @@
         </div>
         <div class="saga-json-item-value" v-else-if="typeof jsonld[key] === 'object'">
             <json-ld-viewer :jsonld="jsonld[key]"></json-ld-viewer>
+        </div>
+        <div class="saga-json-item-value" v-else-if=" jsonld[key].indexOf('http') > -1" >
+           <a :href="jsonld[key]" target="_blank">{{jsonld[key]}}</a> 
         </div>
         <div class="saga-json-item-value" v-else>{{jsonld[key]}}</div>
     </div>
