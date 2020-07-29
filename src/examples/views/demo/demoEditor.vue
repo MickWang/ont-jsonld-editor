@@ -8,22 +8,37 @@
             @editorExpand="onEditorExpand"
             :showFooter="false"
              ></json-ld-editor>    
-        <button @click="onPublish">发布</button>
+        <button class="normal-button" @click="onPublish">发布</button>
     </div>
 </template>
 <script>
 import * as jsonld from 'jsonld';
 var cloneDeep = require('lodash.clonedeep');
+import { store, mutations } from '../../store'
 
 export default {
     name: 'DemoEditor',
     data() {
-        const context_data  = require('./data/context_zh.json')
+        // const context_data  = require('./data/context_zh.json')
+        // const context_data  = require('./data/context_en.json')
         return {
-            context_data,
+            context_data: {},
             jsonldData: {
                 "@context": {}
             },
+        }
+    },
+    computed: {
+        lang() {
+            return store.lang
+        }
+    },
+    watch: {
+        lang(val) {
+            this.jsonldData = {
+                "@context": {}
+            }
+            this.onConfirm()
         }
     },
     async mounted() {
@@ -40,8 +55,14 @@ export default {
         },
         onPublish() {
             this.$refs.editor.handleCompact()
+            this.$message.success('发布成功')
         },
         async onConfirm() {
+            if(this.lang === 'zh') {
+                this.context_data = require('./data/context_zh.json')
+            } else {
+                this.context_data = require('./data/context_en.json')
+            }
             const owner_data = require('./data/default.json')
             let packed = await jsonld.compact(owner_data, this.context_data)
             // packed = Object.freeze(packed)

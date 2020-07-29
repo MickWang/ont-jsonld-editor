@@ -6,6 +6,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 import './../styles/index.scss'
+import './styles/index.scss'
 // 导入组件库
 import SButton from './../packages/button/index'
 import JsonLdViewer from './../packages/JsonLDViewer/index'

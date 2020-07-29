@@ -199,15 +199,5 @@ export default {
         
     }
 }
-.normal-button {
-    border: 1px solid #000000;
-    background: #ffffff;
-    width: 100px;
-    height: 30px;
-    cursor: pointer;
-    outline: none;
-}
-.normal-button:hover {
-    background: rgba(0,0,0,.3)
-}
+
 </style>

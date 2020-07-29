@@ -49,7 +49,7 @@ export default {
     },
     methods: {
         getContext(key) {
-            if(this.context['@context']) {
+            if( this.context && this.context['@context'] && this.context['@context'][key]) {
                 return this.context['@context'][key]['@context']
             } else if(this.context[key]) {
                 return this.context[key]['@context']
